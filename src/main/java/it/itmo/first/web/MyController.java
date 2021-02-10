@@ -1,39 +1,61 @@
 package it.itmo.first.web;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.itmo.first.dto.Representation;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+
+
+/**
+ * Реализовать удаление и изменение данных пользователя,
+ * добавить новые поля
+ *
+ * */
+
+/**
+ * Добавть новый контроллер для автомобилей, сделать класс Car
+ * модель, марка, год выпуска и тд. Собственник int id пользователя по индуексу в листе.
+ * Реализовать добваление удаление маштн и  изменение собственника все через web интерфейс.
+ *
+ * */
 
 @RestController
 @RequestMapping("/greetings")
 public class MyController {
 
-    private List<Representation> representationList = new ArrayList<>();
+    private List<String> names = new ArrayList<>();
 
+    /**
+     * Добавить реализацию контроля за уникальностью,
+     * если пользоваетль уже есть "nice to see you again." и запись не деалем.
+     * */
     @GetMapping
-    @RequestMapping("/hello/{id}")
-    public Representation sayHello(String name, @PathVariable Integer id) {
-        return new Representation(id, name);
+    @RequestMapping("/hello")
+    public String  sayHello(String name) {
+        names.add(name);
+        return String.format("Hello, %s!", name);
     }
 
     @PostMapping
-    @RequestMapping("/hello")
+    @RequestMapping("/returnWithId")
     public Representation sayHello(@RequestBody Representation representation) {
-        representationList.add(representation);
-        representation.setId(999);
+        String name = representation.getName();
+        names.add(name);
+        representation.setId(names.indexOf(name));
         return representation;
     }
 
+    @GetMapping
+    @RequestMapping("/listOfVisitors")
+    public List<String> getVisitors() {
+        return names;
+    }
 
     @GetMapping
     @RequestMapping("/goodbye")

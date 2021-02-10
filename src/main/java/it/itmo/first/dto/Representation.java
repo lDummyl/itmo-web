@@ -1,5 +1,10 @@
 package it.itmo.first.dto;
 
+
+/**
+ * Добавить поля email, birthbate LocalDate, Enum Gender.
+ *
+ * */
 public class Representation {
 
     private Integer id;

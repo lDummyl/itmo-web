@@ -1,5 +1,7 @@
 package it.itmo.first.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.itmo.first.dto.Representation;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,11 +29,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 public class MyControllerTest {
 
-
     MockMvc mockMvc;
 
     @Autowired
     WebApplicationContext webApplicationContext;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Rule
     public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("target/generated-snippets");
@@ -46,26 +50,33 @@ public class MyControllerTest {
 
 
     @Test
-    public void sayHello() throws Exception {
-
-        mockMvc.perform(get("/greetings/goodbye"))
+    public void sayBye() throws Exception {
+        String uri = "/greetings/goodbye";
+        mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
-                .andDo(document("/greetings/goodbye"));
+                .andDo(document(uri));
+    }
+
+    @Test
+    public void sayHello() throws Exception {
+        String urlTemplate = "/greetings/hello";
+        mockMvc.perform(get(urlTemplate)
+                .param("name", "Ivan"))
+                .andExpect(status().isOk())
+                .andDo(document(urlTemplate));
     }
 
     @Test
     public void postUser() throws Exception {
-
-        String content = "{\n" +
-                "    \"id\": 666,\n" +
-                "    \"name\": \"Fedor\"\n" +
-                "}";
-
-
-        mockMvc.perform(post("/greetings/hello")
+        Representation representation = new Representation();
+        representation.setName("Ivan");
+        String content = objectMapper.writeValueAsString(representation);
+        System.out.println(content);
+        String uri = "/greetings/returnWithId";
+        mockMvc.perform(post(uri)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isOk())
-                .andDo(document("/greetings/hello"));
+                .andDo(document(uri));
     }
 }
