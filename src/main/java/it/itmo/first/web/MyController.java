@@ -69,48 +69,83 @@ public class MyController {
 
     @GetMapping
     @RequestMapping("/addUser")
-    public String addNewUser(Integer id, String name, String email, String birthdate, String gender) {
-        for (Representation representation : users) {
-            if (representation.getId().intValue() == id.intValue()) {
-                return "nice to see you again.";
+    public String addUser(String id, String name, String email, String birthdate, String gender) {
+        try {
+            Integer idInteger = Integer.parseInt(id);
+
+            for (Representation representation : users) {
+                if (representation.getId().equals(idInteger)) {
+                    return "nice to see you again.";
+                }
             }
+            Representation user = new Representation(idInteger, name, email,LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("dd-MM-yyyy")),Representation.Gender.valueOf(gender));
+
+            users.add(user);
+            return "Пользователь " + user.toString() + " добавлен в список пользователей";
+        } catch (Exception e) {
+            return "Вводимые данные некорректны";
         }
-        Representation user = new Representation(id, name);
-        user.setEmail(email);
-        LocalDate b =LocalDate.parse(birthdate , DateTimeFormatter.ofPattern ( "dd-MM-yyyy"));
-        user.setBirthdate(b);
-        user.setGender(Representation.Gender.valueOf(gender));
-        users.add(user);
-        return "Пользователь " + user.toString() + " добавлен в список пользователей";
     }
 
     @GetMapping
     @RequestMapping("/deleteUser")
-    public String deleteUser(Integer id) {
-        for (int i=0;i< users.size();i++){
-            if (users.get(i).getId().intValue() == id.intValue()){
-                users.remove(i);
-                return "Пользователь c id = " + id + " удален из списка пользователей";
+    public String deleteUser(String id) {
+        try {
+            Integer idInteger = Integer.parseInt(id);
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getId().intValue() == idInteger.intValue()) {
+                    users.remove(i);
+                    return "Пользователь c id = " + idInteger + " удален из списка пользователей";
+                }
             }
+            return "Пользователя с id = " + idInteger + " нет в списке пользователей";
+        } catch (Exception e) {
+            return "Вводимые данные некорректны";
         }
-        return "Пользователя с id = " + id + " нет в списке пользователей";
     }
 
     @GetMapping
     @RequestMapping("/changeUser")
-    public String changeUser(Integer id, String name, String email, String birthdate, String gender) {
-        for (Representation user : users) {
-            if (user.getId().intValue() == id.intValue()) {
-                if (name!=null) {user.setName(name);}
-                if (email!=null) {user.setEmail(email);}
-                if (birthdate!=null) {user.setBirthdate(LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("dd-MM-yyyy")));}
-                if (gender!=null) {user.setGender(Representation.Gender.valueOf(gender));}
-                return "Пользователь c id = " + id + " изменен";
+    public String changeUser(String id, String name, String email, String birthdate, String gender) {
+        try {
+            if (id==null) return "Не указан id изменяемого пользователя";
+            Integer idInteger = Integer.parseInt(id);
+            for (int i = 0, usersSize = users.size(); i < usersSize; i++) {
+                Representation user = users.get(i);
+                if (user.getId().equals(idInteger)) {
+                    // создадим клон изменяемого объекта для единого внесения всех изменений
+                    Representation userClone = new Representation(user.getId(), user.getName(), user.getEmail(), user.getBirthdate(), user.getGender());
+
+                    //попытаемся заменить поля клона пришедшими в строке-запросе элементами
+                    if (name != null) {
+                        userClone.setName(name);
+                    }
+                    if (email != null) {
+                        userClone.setEmail(email);
+                    }
+                    if (birthdate != null) {
+                        userClone.setBirthdate(LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                    }
+                    if (gender != null) {
+                        userClone.setGender(Representation.Gender.valueOf(gender));
+                    }
+
+                    //если исключений не было заменяем оригинал на клон
+                    users.set(i, userClone);
+                    return "Пользователь c id = " + idInteger + " изменен";
+                }
             }
+            return "Пользователя с id = " + idInteger + " нет в списке пользователей";
+
+        } catch (Exception e) {
+            return "Вводимые данные некорректны";
         }
-        return "Пользователя с id = " + id + " нет в списке пользователей";
     }
 
-
+    @GetMapping
+    @RequestMapping("/showUsers")
+    public List<Representation> showUsers() {
+        return users;
+    }
 
 }

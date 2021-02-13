@@ -32,6 +32,14 @@ public class Representation {
         this.name = name;
     }
 
+    public Representation(Integer id, String name, String email, LocalDate birthdate, Gender gender) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.birthdate = birthdate;
+        this.gender = gender;
+    }
+
     public String getEmail() {
         return email;
     }
