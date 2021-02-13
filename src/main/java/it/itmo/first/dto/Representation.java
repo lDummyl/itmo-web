@@ -16,6 +16,17 @@ public class Representation {
     private LocalDate birthdate;
     private Gender gender;
 
+    @Override
+    public String toString() {
+        return "Representation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", birthdate=" + birthdate +
+                ", gender=" + gender +
+                '}';
+    }
+
     public Representation(Integer id, String name) {
         this.id = id;
         this.name = name;

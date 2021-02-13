@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,5 +63,18 @@ public class MyController {
     public String sayGoodbye() {
         return "Bye-bye Spring!";
     }
+
+    private List<Representation> users = new ArrayList<>();
+    @GetMapping
+    @RequestMapping("/addUser")
+    public String addNewUser(Integer id, String name, String email, String birthdate, String gender) {
+        Representation user = new Representation(id, name);
+        user.setEmail(email);
+        user.setBirthdate(LocalDate.parse(birthdate));
+        user.setGender(Representation.Gender.valueOf(gender));
+        return "Пользователь " + user.toString() + " добавлен в список пользователей";
+    }
+
+
 
 }
