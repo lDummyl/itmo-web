@@ -1,6 +1,7 @@
 package it.itmo.first.web;
 
 
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import it.itmo.first.dto.Representation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -70,7 +73,9 @@ public class MyController {
     public String addNewUser(Integer id, String name, String email, String birthdate, String gender) {
         Representation user = new Representation(id, name);
         user.setEmail(email);
-        user.setBirthdate(LocalDate.parse(birthdate));
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d',' yyyy hh':'mm a", Locale.US);
+        LocalDate b =LocalDate.parse(birthdate , DateTimeFormatter.ofPattern ( "dd-MM-yyyy"));
+        user.setBirthdate(b);
         user.setGender(Representation.Gender.valueOf(gender));
         return "Пользователь " + user.toString() + " добавлен в список пользователей";
     }
