@@ -34,6 +34,9 @@ public class Representation {
 
     public Representation(Integer id, String name, String email, LocalDate birthdate, Gender gender) {
         this.id = id;
+        if (name==null || email==null) {
+            throw new NullPointerException();
+        }
         this.name = name;
         this.email = email;
         this.birthdate = birthdate;

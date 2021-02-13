@@ -78,9 +78,10 @@ public class MyController {
                     return "nice to see you again.";
                 }
             }
-            Representation user = new Representation(idInteger, name, email,LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("dd-MM-yyyy")),Representation.Gender.valueOf(gender));
 
+            Representation user = new Representation(idInteger, name, email, LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("dd-MM-yyyy")), Representation.Gender.valueOf(gender));
             users.add(user);
+
             return "Пользователь " + user.toString() + " добавлен в список пользователей";
         } catch (Exception e) {
             return "Вводимые данные некорректны";
@@ -130,7 +131,7 @@ public class MyController {
                         userClone.setGender(Representation.Gender.valueOf(gender));
                     }
 
-                    //если исключений не было заменяем оригинал на клон
+                    //если исключений не было заменяем оригинал на клон (Что происходит со старым объектом?)
                     users.set(i, userClone);
                     return "Пользователь c id = " + idInteger + " изменен";
                 }
