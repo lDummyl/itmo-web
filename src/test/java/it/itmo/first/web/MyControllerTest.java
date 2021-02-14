@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 public class MyControllerTest {
 
-    MockMvc mockMvc;
+    MockMvc mockMvc; //клиент для тестов
 
     @Autowired
     WebApplicationContext webApplicationContext;

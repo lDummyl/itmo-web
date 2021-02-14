@@ -33,7 +33,7 @@ public class MyController {
 
     private final List<String> names = new ArrayList<>();
 
-    /**
+        /**
      * Добавить реализацию контроля за уникальностью,
      * если пользоваетль уже есть "nice to see you again." и запись не деалем.
      * */
@@ -66,6 +66,9 @@ public class MyController {
     }
 
     private final List<Representation> users = new ArrayList<>();
+    public List<Representation> getUsers(){
+        return users;
+    }
 
     @GetMapping
     @RequestMapping("/addUser")

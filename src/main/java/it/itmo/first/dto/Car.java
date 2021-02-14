@@ -1,6 +1,7 @@
 package it.itmo.first.dto;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /*
  * Добавть новый контроллер для автомобилей, сделать класс Car
@@ -10,16 +11,18 @@ import java.time.LocalDate;
  *
  * */
 public class Car {
+    private Integer id;
     private String model;
     private String brend;
-    private LocalDate yearOfRelease;
-    private int Owner;
+    private Integer yearOfRelease;
+    private Integer owner;
 
-    public Car(String model, String brend, LocalDate yearOfRelease, int owner) {
-        this.model = model;
-        this.brend = brend;
-        this.yearOfRelease = yearOfRelease;
-        Owner = owner;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getModel() {
@@ -38,30 +41,20 @@ public class Car {
         this.brend = brend;
     }
 
-    public LocalDate getYearOfRelease() {
+    public Integer getYearOfRelease() {
         return yearOfRelease;
     }
 
-    public void setYearOfRelease(LocalDate yearOfRelease) {
+    public void setYearOfRelease(Integer yearOfRelease) {
         this.yearOfRelease = yearOfRelease;
     }
 
-    public int getOwner() {
-        return Owner;
+    public Integer getOwner() {
+        return owner;
     }
 
-    public void setOwner(int owner) {
-        Owner = owner;
-    }
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "model='" + model + '\'' +
-                ", brend='" + brend + '\'' +
-                ", yearOfRelease=" + yearOfRelease +
-                ", Owner=" + Owner +
-                '}';
+    public void setOwner(Integer owner) {
+        this.owner = owner;
     }
 }
 
