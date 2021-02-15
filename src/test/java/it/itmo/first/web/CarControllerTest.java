@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.ConfigurableMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -125,14 +126,15 @@ public class CarControllerTest {
     }
 
 //    TODO не знаю как здесь поступить
-   /* @Test
+    @Test
     public void testReadNullParameter() throws Exception{
 
-        String uri = "/greetings/cars/{null}";
-        mockMvc.perform(get(uri))
-                .andExpect(status().isBadRequest())
+        String uri = "/greetings/cars/{id}";
+        Integer id = null;
+        mockMvc.perform(get(uri, id))
+                .andExpect(status().isNotFound())
                 .andDo(document(uri));
-    }*/
+    }
 
     @Test
     public void updateNullParameter() throws Exception{
