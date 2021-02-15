@@ -2,7 +2,7 @@ package it.itmo.first.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.itmo.first.dto.Car;
-import it.itmo.first.dto.Representation;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,12 +17,9 @@ import org.springframework.test.web.servlet.setup.ConfigurableMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.Assert.*;
-import static org.springframework.http.RequestEntity.put;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -59,7 +56,6 @@ public class CarControllerTest {
         car.setYearOfRelease(2010);
         car.setOwner(1);
         String content = objectMapper.writeValueAsString(car);
-        System.out.println(content);
         String uri = "/greetings/cars";
         mockMvc.perform(post(uri)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -70,17 +66,17 @@ public class CarControllerTest {
 
     @Test
     public void read() throws Exception{
-        /*Car car = new Car();
+        Car car = new Car();
         car.setId(1);
         car.setBrend("AUDI");
         car.setModel("Q7");
         car.setYearOfRelease(2010);
         car.setOwner(1);
-        String content = objectMapper.writeValueAsString(car);*/
+        String content = objectMapper.writeValueAsString(car);
         String uri = "/greetings/cars";
-        /*mockMvc.perform(post(uri)
+        mockMvc.perform(post(uri)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(content));*/
+                .content(content));
 
         mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
@@ -89,7 +85,19 @@ public class CarControllerTest {
 
     @Test
     public void testRead() throws Exception{
-        String uri = "/greetings/cars/1";
+        Car car = new Car();
+        car.setId(1);
+        car.setBrend("AUDI");
+        car.setModel("Q7");
+        car.setYearOfRelease(2010);
+        car.setOwner(1);
+        String content = objectMapper.writeValueAsString(car);
+        String uri = "/greetings/cars";
+        mockMvc.perform(post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content));
+
+        uri = "/greetings/cars/1";
         mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
                 .andDo(document(uri));
@@ -104,9 +112,8 @@ public class CarControllerTest {
         car.setYearOfRelease(2010);
         car.setOwner(2);
         String content = objectMapper.writeValueAsString(car);
-        System.out.println(content);
         String uri = "/greetings/cars/1";
-        mockMvc.perform(get(uri)
+        mockMvc.perform(put(uri)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
                 .andExpect(status().isOk())
@@ -115,8 +122,19 @@ public class CarControllerTest {
 
     @Test
     public void delete() throws Exception{
-        String uri = "/greetings/cars/1";
-        mockMvc.perform(get(uri))
+        Car car = new Car();
+        car.setId(2);
+        car.setBrend("AUDI");
+        car.setModel("Q7");
+        car.setYearOfRelease(2010);
+        car.setOwner(1);
+        String content = objectMapper.writeValueAsString(car);
+        String uri = "/greetings/cars";
+        mockMvc.perform(post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content));
+        uri = "/greetings/cars/2";
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete(uri))
                 .andExpect(status().isOk())
                 .andDo(document(uri));
     }
