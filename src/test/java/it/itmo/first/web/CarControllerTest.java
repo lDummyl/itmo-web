@@ -29,6 +29,8 @@ public class CarControllerTest {
 
     MockMvc mockMvc; //клиент для тестов
     Car car = new Car(1,"AUDI","Q-7",2010,1);
+    Car car2 = new Car(2,"BMW","760",1998,2);
+//    Car car = null;
 
     @Autowired
     WebApplicationContext webApplicationContext;
@@ -49,8 +51,6 @@ public class CarControllerTest {
 
     }
 
-
-
     @Test
     public void create() throws Exception{
         String content = objectMapper.writeValueAsString(car);
@@ -64,12 +64,8 @@ public class CarControllerTest {
 
     @Test
     public void read() throws Exception{
-        String content = objectMapper.writeValueAsString(car);
+        create();
         String uri = "/greetings/cars";
-        mockMvc.perform(post(uri)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content));
-
         mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
                 .andDo(document(uri));
@@ -77,13 +73,8 @@ public class CarControllerTest {
 
     @Test
     public void testRead() throws Exception{
-        String content = objectMapper.writeValueAsString(car);
-        String uri = "/greetings/cars";
-        mockMvc.perform(post(uri)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content));
-
-        uri = "/greetings/cars/1";
+        create();
+        String uri = "/greetings/cars/1";
         mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
                 .andDo(document(uri));
@@ -91,13 +82,8 @@ public class CarControllerTest {
 
     @Test
     public void update() throws Exception{
-        Car car = new Car();
-        car.setId(1);
-        car.setBrend("BMW");
-        car.setModel("765");
-        car.setYearOfRelease(1998);
-        car.setOwner(2);
-        String content = objectMapper.writeValueAsString(car);
+        create();
+        String content = objectMapper.writeValueAsString(car2);
         String uri = "/greetings/cars/1";
         mockMvc.perform(put(uri)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -108,14 +94,76 @@ public class CarControllerTest {
 
     @Test
     public void delete() throws Exception{
-        String content = objectMapper.writeValueAsString(car);
-        String uri = "/greetings/cars";
-        mockMvc.perform(post(uri)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content));
-        uri = "/greetings/cars/1";
+        create();
+        String uri = "/greetings/cars/1";
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete(uri))
                 .andExpect(status().isOk())
                 .andDo(document(uri));
     }
+
+//    *******************************************Null_Parameter Test****************************************************
+
+    Car carNullParameter = new Car();
+
+    @Test
+    public void createNullParameter() throws Exception{
+        String content = objectMapper.writeValueAsString(carNullParameter);
+        String uri = "/greetings/cars";
+        mockMvc.perform(post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isIAmATeapot())
+                .andDo(document(uri));
+    }
+
+//    TODO не знаю как здесь поступить
+    /*@Test
+    public void testReadNullParameter() throws Exception{
+
+        String uri = "/greetings/cars/{null}";
+        mockMvc.perform(get(uri))
+                .andExpect(status().isIAmATeapot())
+                .andDo(document(uri));
+    }*/
+
+    @Test
+    public void updateNullParameter() throws Exception{
+        create();
+        String content = objectMapper.writeValueAsString(carNullParameter);
+        String uri = "/greetings/cars/1";
+        mockMvc.perform(put(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isNotModified())
+                .andDo(document(uri));
+    }
+
+//    *******************************************Null_Parameter Test****************************************************
+
+    Car carNull = null;
+
+    @Test
+    public void createNull() throws Exception{
+        String content = objectMapper.writeValueAsString(carNull);
+        String uri = "/greetings/cars";
+        mockMvc.perform(post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isBadRequest())
+                .andDo(document(uri));
+    }
+
+    @Test
+    public void updateNull() throws Exception{
+        create();
+        String content = objectMapper.writeValueAsString(carNull);
+        String uri = "/greetings/cars/1";
+        mockMvc.perform(put(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isBadRequest())
+                .andDo(document(uri));
+    }
+
+
 }

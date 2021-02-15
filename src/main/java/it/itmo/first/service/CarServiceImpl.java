@@ -27,7 +27,7 @@ public class CarServiceImpl implements CarService{
 //        final int carId = CAR_ID_HOLDER.incrementAndGet();
 //        car.setId(carId);
         int carId = car.getId();
-        if (CAR_REPOSITORY_MAP.containsKey(carId)) throw new RuntimeException();
+        if (CAR_REPOSITORY_MAP.containsKey(carId) || car.getId()==null) throw new RuntimeException();
         CAR_REPOSITORY_MAP.put(carId, car);
     }
 
@@ -43,7 +43,7 @@ public class CarServiceImpl implements CarService{
 
     @Override
     public boolean update(Car car, int id) {
-        if (CAR_REPOSITORY_MAP.containsKey(id)) {
+        if (CAR_REPOSITORY_MAP.containsKey(id) && car.getId()!=null) {
             car.setId(id);
             CAR_REPOSITORY_MAP.put(id, car);
             return true;

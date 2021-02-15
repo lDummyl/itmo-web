@@ -31,7 +31,7 @@ public class CarController {
             carService.create(car);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
-        } catch (RuntimeException re){
+        } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
         }
     }
@@ -47,11 +47,17 @@ public class CarController {
 
     @GetMapping(value = "/cars/{id}")
     public ResponseEntity<Car> read(@PathVariable(name = "id") int id) {
-        final Car car = carService.read(id);
+        try {
+            final Car car = carService.read(id);
 
-        return car != null
-                ? new ResponseEntity<>(car, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return car != null
+                    ? new ResponseEntity<>(car, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        }
+
     }
 
     @PutMapping(value = "/cars/{id}")
