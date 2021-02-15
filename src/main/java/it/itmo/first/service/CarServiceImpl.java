@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+//import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 /*Аннотация @Service говорит спрингу, что данный класс является сервисом. Это специальный тип классов,
@@ -20,7 +20,7 @@ public class CarServiceImpl implements CarService{
     private static final Map<Integer, Car> CAR_REPOSITORY_MAP = new HashMap<>();
 
     // Переменная для генерации ID машины
-    private static final AtomicInteger CAR_ID_HOLDER = new AtomicInteger();
+//    private static final AtomicInteger CAR_ID_HOLDER = new AtomicInteger();
 
     @Override
     public void create(Car car) {
