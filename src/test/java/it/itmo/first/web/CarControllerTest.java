@@ -50,6 +50,14 @@ public class CarControllerTest {
 
 
     }
+    public void createCar() throws Exception{
+        String content = objectMapper.writeValueAsString(car);
+        String uri = "/greetings/cars";
+        mockMvc.perform(post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content));
+    }
+
 
     @Test
     public void create() throws Exception{
@@ -64,7 +72,7 @@ public class CarControllerTest {
 
     @Test
     public void read() throws Exception{
-        create();
+        createCar();
         String uri = "/greetings/cars";
         mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
@@ -73,7 +81,7 @@ public class CarControllerTest {
 
     @Test
     public void testRead() throws Exception{
-        create();
+        createCar();
         String uri = "/greetings/cars/1";
         mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
@@ -82,7 +90,7 @@ public class CarControllerTest {
 
     @Test
     public void update() throws Exception{
-        create();
+        createCar();
         String content = objectMapper.writeValueAsString(car2);
         String uri = "/greetings/cars/1";
         mockMvc.perform(put(uri)
@@ -94,7 +102,7 @@ public class CarControllerTest {
 
     @Test
     public void delete() throws Exception{
-        create();
+        createCar();
         String uri = "/greetings/cars/1";
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete(uri))
                 .andExpect(status().isOk())
@@ -117,18 +125,18 @@ public class CarControllerTest {
     }
 
 //    TODO не знаю как здесь поступить
-    /*@Test
+   /* @Test
     public void testReadNullParameter() throws Exception{
 
         String uri = "/greetings/cars/{null}";
         mockMvc.perform(get(uri))
-                .andExpect(status().isIAmATeapot())
+                .andExpect(status().isBadRequest())
                 .andDo(document(uri));
     }*/
 
     @Test
     public void updateNullParameter() throws Exception{
-        create();
+        createCar();
         String content = objectMapper.writeValueAsString(carNullParameter);
         String uri = "/greetings/cars/1";
         mockMvc.perform(put(uri)
@@ -138,7 +146,7 @@ public class CarControllerTest {
                 .andDo(document(uri));
     }
 
-//    *******************************************Null_Parameter Test****************************************************
+//    *******************************************Null Test**************************************************************
 
     Car carNull = null;
 
@@ -155,7 +163,7 @@ public class CarControllerTest {
 
     @Test
     public void updateNull() throws Exception{
-        create();
+        createCar();
         String content = objectMapper.writeValueAsString(carNull);
         String uri = "/greetings/cars/1";
         mockMvc.perform(put(uri)

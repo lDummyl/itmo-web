@@ -3,9 +3,12 @@ package it.itmo.first.web;
 import it.itmo.first.dto.Car;
 import it.itmo.first.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -46,8 +49,12 @@ public class CarController {
     }
 
     @GetMapping(value = "/cars/{id}")
-    public ResponseEntity<Car> read(@PathVariable(name = "id") int id) {
+    public ResponseEntity<Car> read(@PathVariable(name = "id") Integer id) {
         try {
+            if (id == null){
+                System.out.println(id);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
             final Car car = carService.read(id);
 
             return car != null
