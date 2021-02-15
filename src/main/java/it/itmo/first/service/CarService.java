@@ -7,7 +7,8 @@ import java.util.List;
 public interface CarService {
         /**
          * Создает новую машину
-         * @param car - клиент для создания
+         * @param car - машина для создания
+         * Если машина с таким id уже есть, то не добавляет в список машин
          */
         void create(Car car);
 

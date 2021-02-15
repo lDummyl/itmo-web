@@ -24,9 +24,11 @@ public class CarServiceImpl implements CarService{
 
     @Override
     public void create(Car car) {
-        final int clientId = CAR_ID_HOLDER.incrementAndGet();
-        car.setId(clientId);
-        CAR_REPOSITORY_MAP.put(clientId, car);
+//        final int carId = CAR_ID_HOLDER.incrementAndGet();
+//        car.setId(carId);
+        int carId = car.getId();
+        if (CAR_REPOSITORY_MAP.containsKey(carId)) throw new RuntimeException();
+        CAR_REPOSITORY_MAP.put(carId, car);
     }
 
     @Override
