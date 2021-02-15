@@ -28,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CarControllerTest {
 
     MockMvc mockMvc; //клиент для тестов
+    Car car = new Car(1,"AUDI","Q-7",2010,1);
 
     @Autowired
     WebApplicationContext webApplicationContext;
@@ -44,17 +45,14 @@ public class CarControllerTest {
                 MockMvcBuilders.webAppContextSetup(this.webApplicationContext)
                         .apply(documentationConfiguration(this.restDocumentation));
         this.mockMvc = builder.build();
+
+
     }
+
 
 
     @Test
     public void create() throws Exception{
-        Car car = new Car();
-        car.setId(1);
-        car.setBrend("AUDI");
-        car.setModel("Q7");
-        car.setYearOfRelease(2010);
-        car.setOwner(1);
         String content = objectMapper.writeValueAsString(car);
         String uri = "/greetings/cars";
         mockMvc.perform(post(uri)
@@ -66,12 +64,6 @@ public class CarControllerTest {
 
     @Test
     public void read() throws Exception{
-        Car car = new Car();
-        car.setId(1);
-        car.setBrend("AUDI");
-        car.setModel("Q7");
-        car.setYearOfRelease(2010);
-        car.setOwner(1);
         String content = objectMapper.writeValueAsString(car);
         String uri = "/greetings/cars";
         mockMvc.perform(post(uri)
@@ -85,12 +77,6 @@ public class CarControllerTest {
 
     @Test
     public void testRead() throws Exception{
-        Car car = new Car();
-        car.setId(1);
-        car.setBrend("AUDI");
-        car.setModel("Q7");
-        car.setYearOfRelease(2010);
-        car.setOwner(1);
         String content = objectMapper.writeValueAsString(car);
         String uri = "/greetings/cars";
         mockMvc.perform(post(uri)
@@ -107,9 +93,9 @@ public class CarControllerTest {
     public void update() throws Exception{
         Car car = new Car();
         car.setId(1);
-        car.setBrend("AUDI");
-        car.setModel("Q7");
-        car.setYearOfRelease(2010);
+        car.setBrend("BMW");
+        car.setModel("765");
+        car.setYearOfRelease(1998);
         car.setOwner(2);
         String content = objectMapper.writeValueAsString(car);
         String uri = "/greetings/cars/1";
@@ -122,18 +108,12 @@ public class CarControllerTest {
 
     @Test
     public void delete() throws Exception{
-        Car car = new Car();
-        car.setId(2);
-        car.setBrend("AUDI");
-        car.setModel("Q7");
-        car.setYearOfRelease(2010);
-        car.setOwner(1);
         String content = objectMapper.writeValueAsString(car);
         String uri = "/greetings/cars";
         mockMvc.perform(post(uri)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content));
-        uri = "/greetings/cars/2";
+        uri = "/greetings/cars/1";
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete(uri))
                 .andExpect(status().isOk())
                 .andDo(document(uri));

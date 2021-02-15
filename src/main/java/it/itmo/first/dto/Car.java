@@ -17,6 +17,17 @@ public class Car {
     private Integer yearOfRelease;
     private Integer owner;
 
+    public Car(Integer id, String model, String brend, Integer yearOfRelease, Integer owner) {
+        this.id = id;
+        this.model = model;
+        this.brend = brend;
+        this.yearOfRelease = yearOfRelease;
+        this.owner = owner;
+    }
+
+    public Car() {
+    }
+
     public Integer getId() {
         return id;
     }
