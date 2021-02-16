@@ -28,7 +28,7 @@ import java.util.List;
 public class MyController {
 
     private final List<String> names = new ArrayList<>();
-    private final List<Representation> users = new ArrayList<>();
+    public final List<Representation> users = new ArrayList<>();
 
     /**
      * Добавить реализацию контроля за уникальностью,
