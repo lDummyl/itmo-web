@@ -3,7 +3,7 @@ package it.itmo.first.dto;
 import java.time.LocalDate;
 
 public class Car {
-    private Integer userId;
+    private Integer id;
     private String brandName;
     private String brandModelName;
     private LocalDate productionDate;
@@ -14,16 +14,16 @@ public class Car {
     }
 
     public Car(Integer id, String brandName) {
-        this.userId = id;
+        this.id = id;
         this.brandName = brandName;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getBrandName() {
@@ -69,11 +69,12 @@ public class Car {
     @Override
     public String toString() {
         return "Car{" +
-                "id=" + userId +
+                "id=" + id +
                 ", brandName='" + brandName + '\'' +
                 ", brandModelName='" + brandModelName + '\'' +
                 ", productionDate=" + productionDate +
                 ", color='" + color + '\'' +
+                ", type=" + type +
                 '}';
     }
 }
