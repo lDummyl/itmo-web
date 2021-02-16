@@ -1,6 +1,8 @@
 package it.itmo.first.dto;
 
 
+import java.time.LocalDate;
+
 /**
  * Добавить поля email, birthbate LocalDate, Enum Gender.
  *
@@ -9,6 +11,9 @@ public class Representation {
 
     private Integer id;
     private String name;
+    private String email;
+    private LocalDate birthdate;
+    private Gender gender;
 
     public Representation(Integer id, String name) {
         this.id = id;
@@ -33,5 +38,40 @@ public class Representation {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", birthdate=" + birthdate +
+                ", gender=" + gender +
+                '}';
     }
 }
