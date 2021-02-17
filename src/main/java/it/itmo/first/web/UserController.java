@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/users/{id}")
-    public ResponseEntity<?> update(@PathVariable(name = "id") int id, @RequestBody User user) {
+    public ResponseEntity<?> update(@PathVariable int id, @RequestBody User user) {
         final boolean updated = userService.update(user, id);
 
         if (updated) {
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/users/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
+    public ResponseEntity<?> delete(@PathVariable int id) {
         final boolean deleted = userService.delete(id);
 
         if (deleted) {

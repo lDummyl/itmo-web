@@ -54,7 +54,7 @@ public class CarController {
     }
 
     @PutMapping(value = "/cars/{id}")
-    public ResponseEntity<?> update(@PathVariable(name = "id") int id, @RequestBody Car car) {
+    public ResponseEntity<?> update(@PathVariable int id, @RequestBody Car car) {
         final boolean updated = carService.update(car, id);
 
         if (updated) {
@@ -64,7 +64,7 @@ public class CarController {
     }
 
     @DeleteMapping(value = "/cars/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
+    public ResponseEntity<?> delete(@PathVariable int id) {
         final boolean deleted = carService.delete(id);
 
         if (deleted) {

@@ -1,15 +1,5 @@
 package it.itmo.first.dto;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-/*
- * Добавть новый контроллер для автомобилей, сделать класс Car
- * модель, марка, год выпуска и тд. Собственник int id пользователя по индуексу в листе.
- * Реализовать добваление удаление маштн и  изменение собственника все через web интерфейс.
- *
- *
- * */
 public class Car {
     private Integer id;
     private String model;
