@@ -1,18 +1,14 @@
 package it.itmo.first.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.itmo.first.dto.Representation;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.ConfigurableMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -22,12 +18,11 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class MyControllerTest {
+public class UserControllerTest {
 
     MockMvc mockMvc; //клиент для тестов
 
@@ -49,7 +44,7 @@ public class MyControllerTest {
     }
 
 
-    @Test
+    /*@Test
     public void sayBye() throws Exception {
         String uri = "/greetings/goodbye";
         mockMvc.perform(get(uri))
@@ -78,5 +73,5 @@ public class MyControllerTest {
                 .content(content))
                 .andExpect(status().isOk())
                 .andDo(document(uri));
-    }
+    }*/
 }

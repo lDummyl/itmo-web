@@ -1,43 +1,57 @@
 package it.itmo.first.service;
 
 import it.itmo.first.dto.Car;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public interface CarService {
-        /**
-         * Создает новую машину
-         * @param car - машина для создания
-         * Если машина с таким id уже есть, то не добавляет в список машин
-         */
-        void create(Car car);
+@Service
+/*Аннотация @Service говорит спрингу, что данный класс является сервисом. Это специальный тип классов,
+в котором реализуется некоторая бизнес логика приложения. Впоследствии, благодаря этой аннотации Spring
+будет предоставлять нам экземпляр данного класса в местах, где это, нужно с помощью Dependency Injection.*/
 
-        /**
-         * Возвращает список всех имеющихся машин
-         * @return список машин
-         */
-        List<Car> readAll();
+public class CarService implements ICarService {
 
-        /**
-         * Возвращает машину по ее ID
-         * @param id - ID машины
-         * @return - объект машины с заданным ID
-         */
-        Car read(int id);
+    // Хранилище машин
+    private static final Map<Integer, Car> CAR_REPOSITORY_MAP = new HashMap<>();
 
-        /**
-         * Обновляет машину с заданным ID,
-         * в соответствии с переданной машиной
-         * @param car - машина в соответсвии с которой нужно обновить данные
-         * @param id - id клиента которого нужно обновить
-         * @return - true если данные были обновлены, иначе false
-         */
-        boolean update(Car car, int id);
+    // Переменная для генерации ID машины
+    private static final AtomicInteger CAR_ID_HOLDER = new AtomicInteger();
 
-        /**
-         * Удаляет машину с заданным ID
-         * @param id - id машины, которую нужно удалить
-         * @return - true если машина была удалена, иначе false
-         */
-        boolean delete(int id);
+    @Override
+    public void create(Car car) {
+        final int carId = CAR_ID_HOLDER.incrementAndGet();
+        car.setId(carId);
+        CAR_REPOSITORY_MAP.put(carId, car);
+    }
+
+    @Override
+    public List<Car> readAll() {
+        return new ArrayList<>(CAR_REPOSITORY_MAP.values());
+    }
+
+    @Override
+    public Car read(int id) {
+        return CAR_REPOSITORY_MAP.get(id);
+    }
+
+    @Override
+    public boolean update(Car car, int id) {
+        if (CAR_REPOSITORY_MAP.containsKey(id) && car.getId()!=null) {
+            car.setId(id);
+            CAR_REPOSITORY_MAP.put(id, car);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return CAR_REPOSITORY_MAP.remove(id) != null;
+    }
 }
