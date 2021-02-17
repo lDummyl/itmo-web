@@ -5,6 +5,9 @@ import it.itmo.first.db.repo.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -16,10 +19,15 @@ public class UserService {
 
     @PostConstruct
     public void init(){
-        Iterable<UserEntity> all = userRepository.findAll();
-        for (UserEntity userEntity : all) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName("Artur");
+        userEntity.setBirthdate(LocalDate.ofYearDay(1986, 120));
 
-            System.out.println(userEntity.toString());
+//        userRepository.save(userEntity);
+
+        List<UserEntity> allByBirthdateAfter = userRepository.findAllByQuery(LocalDate.ofYearDay(2000, 1));
+        for (UserEntity entity : allByBirthdateAfter) {
+            System.out.println(entity.toString());
         }
     }
 }

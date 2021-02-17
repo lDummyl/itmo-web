@@ -1,18 +1,41 @@
 package it.itmo.first.db.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(schema = "public", name = "user")
 public class UserEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
+    private LocalDate birthdate;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id")
+    private List<CarEntity> carEntities;
 
     public UserEntity() {
+    }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public List<CarEntity> getCarEntities() {
+        return carEntities;
+    }
+
+    public void setCarEntities(List<CarEntity> carEntities) {
+        this.carEntities = carEntities;
     }
 
     public Integer getId() {
