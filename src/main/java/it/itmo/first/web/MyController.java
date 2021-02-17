@@ -29,6 +29,19 @@ public class MyController {
 
     private final List<String> names = new ArrayList<>();
     public final List<Representation> users = new ArrayList<>();
+    {
+        Representation user1 = new Representation(1, "John");
+        user1.setGender(Gender.MALE);
+        user1.setBirthdate(LocalDate.ofYearDay(1986, 150));
+        user1.setEmail("john@mail.ru");
+        Representation user2 = new Representation(2, "Alice");
+        user1.setGender(Gender.FEMALE);
+        user1.setBirthdate(LocalDate.ofYearDay(1996, 155));
+        user1.setEmail("alice@mail.ru");
+
+        users.add(user1);
+        users.add(user2);
+    }
 
     /**
      * Добавить реализацию контроля за уникальностью,
@@ -69,11 +82,11 @@ public class MyController {
     public String addUser(Integer id, String name, String email, LocalDate birthdate, Gender gender){
         Representation user = new Representation(id, name);
 
-//        for(Representation tempUser : users){
-//            if(tempUser.getId().equals(user.getId())){
-//                return "nice to see you again.";
-//            }
-//        }
+        for(Representation tempUser : users){
+            if(tempUser.getId().equals(user.getId())){
+                return "nice to see you again.";
+            }
+        }
         user.setEmail(email);
         user.setBirthdate(birthdate);
         user.setGender(gender);
@@ -107,6 +120,7 @@ public class MyController {
         }
         return "User is not found!";
     }
+
 
     @GetMapping
     @RequestMapping("/users/show")

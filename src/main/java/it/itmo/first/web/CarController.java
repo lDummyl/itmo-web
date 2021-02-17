@@ -1,11 +1,13 @@
 package it.itmo.first.web;
 
 import it.itmo.first.dto.Car;
-import it.itmo.first.dto.CarCRUD;
 import it.itmo.first.dto.CarType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -13,41 +15,55 @@ import java.util.Map;
 public class CarController {
 
 
-   private final CarCRUD carCRUD = new CarCRUD();
+   private final Map<Integer,Car> cars = new HashMap<>();
+    {
+        Car car1 = new Car(1, "BMW");
+        car1.setBrandModelName("525");
+        car1.setProductionDate(LocalDate.ofYearDay(2019, 100));
+        car1.setColor("Black");
+        car1.setType(CarType.SEDAN);
+
+        Car car2 = new Car(2, "Mercedes");
+        car2.setBrandModelName("E300");
+        car2.setProductionDate(LocalDate.ofYearDay(2020, 15));
+        car2.setColor("White");
+        car2.setType(CarType.CONVERTIBLE);
+
+        cars.put(1,car1);
+        cars.put(2,car2);
+
+    }
 
     @GetMapping
-    @RequestMapping("/cars")
+    @RequestMapping("/cars/add")
     public String create(Car car) {
-        assert car != null;
-        carCRUD.create(car);
+        Integer carId = car.getId();
+        if(!cars.containsKey(carId) && carId != null) {
+            cars.put(carId, car);
+        }
 
         return car.toString() + " is created.";
     }
     @GetMapping
     @RequestMapping("/cars/{id}/edit")
-    public String update(@PathVariable("id") Integer id, String brandName, String brandModelName,
-                          LocalDate productionDate, String color, CarType type) {
-
-       carCRUD.update(id, brandName, brandModelName, productionDate, color, type);
-
+    public String update(@PathVariable("id") Integer id, Car car) {
+       if(cars.containsKey(id)){
+           cars.put(id, car);
+       }
         return "Car id = " + id + " has been edited.";
     }
 
     @GetMapping
     @RequestMapping("/cars/{id}/delete")
     public String delete(@PathVariable("id") Integer id) {
-        assert id != null;
-        carCRUD.delete(id);
-
+        cars.remove(id);
         return "Car id = " + id + " has been deleted.";
     }
 
     @GetMapping
     @RequestMapping("/cars/show")
     public String showUsers(){
-        Map<Integer, Car> carMap = carCRUD.carMap();
-
-        return carMap.toString();
+        return cars.toString();
     }
 
 
