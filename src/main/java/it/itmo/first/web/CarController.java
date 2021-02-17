@@ -34,7 +34,7 @@ public class CarController {
 
     }
 
-    @GetMapping
+    @PostMapping
     @RequestMapping("/cars/add")
     public String create(Car car) {
         Integer carId = car.getId();
@@ -44,8 +44,8 @@ public class CarController {
 
         return car.toString() + " is created.";
     }
-    @GetMapping
-    @RequestMapping("/cars/{id}/edit")
+    @PutMapping
+    @RequestMapping("/cars/{id}")
     public String update(@PathVariable("id") Integer id, Car car) {
        if(cars.containsKey(id)){
            cars.put(id, car);
@@ -53,12 +53,12 @@ public class CarController {
         return "Car id = " + id + " has been edited.";
     }
 
-    @GetMapping
-    @RequestMapping("/cars/{id}/delete")
-    public String delete(@PathVariable("id") Integer id) {
-        cars.remove(id);
-        return "Car id = " + id + " has been deleted.";
-    }
+//    @DeleteMapping
+//    @RequestMapping("/cars/{id}")
+//    public String delete(@PathVariable("id") Integer id) {
+//        cars.remove(id);
+//        return "Car id = " + id + " has been deleted.";
+//    }
 
     @GetMapping
     @RequestMapping("/cars/show")

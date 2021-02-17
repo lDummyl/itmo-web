@@ -5,6 +5,7 @@ import it.itmo.first.dto.Gender;
 import it.itmo.first.dto.Representation;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,7 @@ public class MyController {
         users.add(user);
          return user.toString() + " is successfully added.";
     }
-    @GetMapping
+    @PutMapping
     @RequestMapping("/users/{id}/edit")
     public String edit(@PathVariable("id") Integer id, String name, String email, LocalDate birthdate, Gender gender){
        for(Representation user : users){
@@ -109,7 +110,7 @@ public class MyController {
        return "User is not found!";
     }
 
-    @GetMapping
+    @DeleteMapping
     @RequestMapping("/users/{id}/delete")
     public String delete(@PathVariable("id") Integer id){
         for(Representation user : users){
@@ -127,4 +128,6 @@ public class MyController {
     public String showUsers(){
         return users.toString();
     }
+
+
 }
