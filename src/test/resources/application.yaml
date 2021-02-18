@@ -1,0 +1,7 @@
+#здесь можно указать другую базу данных для тестов
+#например h2 (in memory)
+datasource:
+  url: jdbc:postgresql://localhost:5432/postgres
+  username: postgres
+  password: 12345678
+  driver-class-name: org.postgresql.Driver

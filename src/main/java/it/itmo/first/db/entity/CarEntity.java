@@ -13,6 +13,15 @@ public class CarEntity {
     private String brend;
     private Integer year_of_release;
 
+    @Override
+    public String toString() {
+        return "CarEntity{" +
+                "id=" + id +
+                ", model='" + model + '\'' +
+                ", brend='" + brend + '\'' +
+                ", year_of_release=" + year_of_release +
+                '}';
+    }
 
     public CarEntity() {
     }

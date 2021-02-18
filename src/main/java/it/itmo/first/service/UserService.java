@@ -6,6 +6,7 @@ import it.itmo.first.dto.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,10 +29,24 @@ public class UserService implements IUserService{
 
     @PostConstruct
     public void init(){
-        Iterable<UserEntity> all = userRepository.findAll();
-        for (UserEntity userEntity : all) {
-            System.out.println(userEntity.toString());
-        }
+//        Iterable<UserEntity> all = userRepository.findAll();
+//        for (UserEntity userEntity : all) {
+//            System.out.println(userEntity.toString()); //вывод всех юзеров
+//        }
+//
+
+//        UserEntity userEntity = new UserEntity();
+//        userEntity.setId(0);
+//        userEntity.setName("Aleksandr");
+//        userEntity.setBirthdate(LocalDate.of(1990,2,8));
+//        userEntity.setEmail("maksimovav@yandex.ru");
+//        userEntity.setGender(User.Gender.male);
+
+//        userRepository.save(userEntity); //запись в БД
+
+        System.out.println(userRepository.findAllByBirthdateAfter(LocalDate.ofYearDay(1991, 1)));
+
+        System.out.println(userRepository.findAllByQuery(LocalDate.of(1990, 2, 8)));
     }
 
     @Override
