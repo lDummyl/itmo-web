@@ -20,7 +20,7 @@ public class UserService implements IUserService{
     // Переменная для генерации ID пользователя
     private static final AtomicInteger USER_ID_HOLDER = new AtomicInteger();
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
