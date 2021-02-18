@@ -1,8 +1,11 @@
 package it.itmo.first.service;
 
+import it.itmo.first.db.entity.UserEntity;
+import it.itmo.first.db.repo.UserRepository;
 import it.itmo.first.dto.User;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +19,20 @@ public class UserService implements IUserService{
 
     // Переменная для генерации ID пользователя
     private static final AtomicInteger USER_ID_HOLDER = new AtomicInteger();
+
+    private UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @PostConstruct
+    public void init(){
+        Iterable<UserEntity> all = userRepository.findAll();
+        for (UserEntity userEntity : all) {
+            System.out.println(userEntity.toString());
+        }
+    }
 
     @Override
     public void create(User user) {
