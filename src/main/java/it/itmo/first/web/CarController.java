@@ -2,12 +2,11 @@ package it.itmo.first.web;
 
 import it.itmo.first.dto.Car;
 import it.itmo.first.dto.CarType;
+import it.itmo.first.services.CarService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -15,55 +14,36 @@ import java.util.Map;
 public class CarController {
 
 
-   private final Map<Integer,Car> cars = new HashMap<>();
-    {
-        Car car1 = new Car(1, "BMW");
-        car1.setBrandModelName("525");
-        car1.setProductionDate(LocalDate.ofYearDay(2019, 100));
-        car1.setColor("Black");
-        car1.setType(CarType.SEDAN);
+   private CarService carService;
 
-        Car car2 = new Car(2, "Mercedes");
-        car2.setBrandModelName("E300");
-        car2.setProductionDate(LocalDate.ofYearDay(2020, 15));
-        car2.setColor("White");
-        car2.setType(CarType.CONVERTIBLE);
-
-        cars.put(1,car1);
-        cars.put(2,car2);
-
+    public CarController(CarService carService) {
+        this.carService = carService;
     }
 
     @PostMapping
     @RequestMapping("/cars/add")
     public String create(Car car) {
-        Integer carId = car.getId();
-        if(!cars.containsKey(carId) && carId != null) {
-            cars.put(carId, car);
-        }
-
-        return car.toString() + " is created.";
+        return carService.create(car);
     }
+
     @PutMapping
     @RequestMapping("/cars/{id}/edit")
     public String update(@PathVariable("id") Integer id, Car car) {
-       if(cars.containsKey(id)){
-           cars.put(id, car);
-       }
-        return "Car id = " + id + " has been edited.";
+
+        return carService.update(id, car);
     }
 
     @DeleteMapping
     @RequestMapping("/cars/{id}/delete")
     public String delete(@PathVariable("id") Integer id) {
-        cars.remove(id);
-        return "Car id = " + id + " has been deleted.";
+
+        return carService.delete(id);
     }
 
     @GetMapping
     @RequestMapping("/cars/show")
     public String showUsers(){
-        return cars.toString();
+        return carService.showUsers();
     }
 
 

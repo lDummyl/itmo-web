@@ -15,4 +15,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Integer> {
        @Query("select u from UserEntity u where u.birthdate >= :localDate")
        List<UserEntity> findAllByQuery(LocalDate localDate);
 
+       List<UserEntity> findAll();
+
 }

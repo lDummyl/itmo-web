@@ -1,5 +1,7 @@
 package it.itmo.first.db.entity;
 
+import it.itmo.first.dto.Gender;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +16,8 @@ public class UserEntity {
 
     private String name;
     private LocalDate birthdate;
+    private String email;
+    private Gender gender;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
@@ -54,11 +58,30 @@ public class UserEntity {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", birthdate=" + birthdate +
+                ", email='" + email + '\'' +
+                ", gender=" + gender +
                 '}';
     }
 }

@@ -1,6 +1,8 @@
 package it.itmo.first.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.itmo.first.dto.Gender;
 import it.itmo.first.dto.Representation;
 import org.junit.Before;
 import org.junit.Rule;
@@ -18,10 +20,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 
+import java.time.LocalDate;
+
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -29,7 +33,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 public class MyControllerTest {
 
+
     MockMvc mockMvc;
+    Representation user = new Representation();
+    {
+        user.setId(666);
+        user.setName("Paul");
+        user.setGender(Gender.MALE);
+        user.setBirthdate(LocalDate.of(1988, 11, 20));
+        user.setEmail("paul@gmail.com");
+    }
 
     @Autowired
     WebApplicationContext webApplicationContext;
@@ -79,4 +92,46 @@ public class MyControllerTest {
                 .andExpect(status().isOk())
                 .andDo(document(uri));
     }
+
+    @Test
+    public void create() throws Exception {
+        String content = objectMapper.writeValueAsString(user);
+        System.out.println(content);
+        String uri = "/greetings/users/add";
+        mockMvc.perform(put(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isOk())
+                .andDo(document(uri));
+
+    }
+
+    @Test
+    public void update() throws Exception {
+        String content = objectMapper.writeValueAsString(user);
+        System.out.println(content);
+        String uri = "/greetings/users/666/edit";
+        mockMvc.perform(put(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isOk())
+                .andDo(document(uri));
+    }
+
+    @Test
+    public void delete() throws Exception {
+        String uri = "/greetings/users/666/delete";
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete(uri))
+                .andExpect(status().isOk())
+                .andDo(document(uri));
+    }
+
+    @Test
+    public void test() throws JsonProcessingException {
+
+        Representation representation = new Representation();
+        representation.setName("John");
+        System.out.println(objectMapper.writeValueAsString(representation));
+    }
+
 }

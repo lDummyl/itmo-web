@@ -3,11 +3,10 @@ package it.itmo.first.web;
 
 import it.itmo.first.dto.Gender;
 import it.itmo.first.dto.Representation;
+import it.itmo.first.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,20 +27,10 @@ import java.util.List;
 @RequestMapping("/greetings")
 public class MyController {
 
-    private final List<String> names = new ArrayList<>();
-    public final List<Representation> users = new ArrayList<>();
-    {
-        Representation user1 = new Representation(1, "John");
-        user1.setGender(Gender.MALE);
-        user1.setBirthdate(LocalDate.ofYearDay(1986, 150));
-        user1.setEmail("john@mail.ru");
-        Representation user2 = new Representation(2, "Alice");
-        user1.setGender(Gender.FEMALE);
-        user1.setBirthdate(LocalDate.ofYearDay(1996, 155));
-        user1.setEmail("alice@mail.ru");
 
-        users.add(user1);
-        users.add(user2);
+    private final UserService userService;
+    public MyController(UserService userService) {
+        this.userService = userService;
     }
 
     /**
@@ -51,23 +40,20 @@ public class MyController {
     @GetMapping
     @RequestMapping("/hello")
     public String  sayHello(String name) {
-        names.add(name);
-        return String.format("Hello, %s!", name);
+        return userService.sayHello(name);
     }
 
     @PostMapping
     @RequestMapping("/returnWithId")
     public Representation sayHello(@RequestBody Representation representation) {
-        String name = representation.getName();
-        names.add(name);
-        representation.setId(names.indexOf(name));
-        return representation;
+        Representation result = userService.save(representation);
+        return result;
     }
 
     @GetMapping
     @RequestMapping("/listOfVisitors")
     public List<String> getVisitors() {
-        return names;
+        return userService.names();
     }
 
     @GetMapping
@@ -81,52 +67,24 @@ public class MyController {
     @GetMapping
     @RequestMapping("/users/add")
     public String addUser(Integer id, String name, String email, LocalDate birthdate, Gender gender){
-        Representation user = new Representation(id, name);
-
-        for(Representation tempUser : users){
-            if(tempUser.getId().equals(user.getId())){
-                return "nice to see you again.";
-            }
-        }
-        user.setEmail(email);
-        user.setBirthdate(birthdate);
-        user.setGender(gender);
-
-        users.add(user);
-         return user.toString() + " is successfully added.";
+         return userService.addUser(id, name, email, birthdate, gender);
     }
     @PutMapping
     @RequestMapping("/users/{id}/edit")
     public String edit(@PathVariable("id") Integer id, String name, String email, LocalDate birthdate, Gender gender){
-       for(Representation user : users){
-           if(user.getId().equals(id)){
-               user.setName(name);
-               user.setEmail(email);
-               user.setBirthdate(birthdate);
-               user.setGender(gender);
-               return user.toString() + " is successfully edited.";
-           }
-       }
-       return "User is not found!";
+       return userService.edit(id, name, email, birthdate, gender);
     }
 
     @DeleteMapping
     @RequestMapping("/users/{id}/delete")
     public String delete(@PathVariable("id") Integer id){
-        for(Representation user : users){
-            if(user.getId().equals(id)){
-                users.remove(user);
-                return user.toString() + " has been successfully removed.";
-            }
-        }
-        return "User is not found!";
+        return userService.delete(id);
     }
-
 
     @GetMapping
     @RequestMapping("/users/show")
     public String showUsers(){
-        return users.toString();
+        return userService.showUsers();
     }
 
 
