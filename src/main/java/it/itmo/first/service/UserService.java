@@ -1,7 +1,7 @@
 package it.itmo.first.service;
 
+import it.itmo.first.db.JpaRepository.UserRepository;
 import it.itmo.first.db.entity.UserEntity;
-import it.itmo.first.db.JpaRepository.CarRepository;
 import it.itmo.first.dto.User;
 
 import javax.annotation.PostConstruct;
@@ -23,9 +23,9 @@ public class UserService implements IUserService{
     // Переменная для генерации ID пользователя
     private static final AtomicInteger USER_ID_HOLDER = new AtomicInteger();
 
-    private final CarRepository userRepository;
+    private final UserRepository userRepository;
 
-    public UserService(CarRepository userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -33,23 +33,9 @@ public class UserService implements IUserService{
     @PostConstruct
     public void init(){
         //вывод всех юзеров
-//        Iterable<UserEntity> all = userRepository.findAll();
-//        System.out.println(all.toString());
+        Iterable<UserEntity> all = userRepository.findAll();
+        System.out.println(all.toString());
 
-        //запись в БД
-//        UserEntity userEntity = new UserEntity();
-//        userEntity.setId(0);
-//        userEntity.setName("Ivan");
-//        userEntity.setBirthdate(LocalDate.of(1987,3,6));
-//        userEntity.setEmail("maksimovav@yandex.ru");
-//        userEntity.setGender(User.Gender.male);
-//
-//       userRepository.save(userEntity);
-
-
-//        System.out.println(userRepository.findAllByBirthdateAfter(LocalDate.ofYearDay(1989, 1)));
-//
-//        System.out.println(userRepository.findAllByQuery(LocalDate.of(1989, 2, 8)));
     }
 
     @Override
@@ -57,11 +43,6 @@ public class UserService implements IUserService{
         final int userId = USER_ID_HOLDER.incrementAndGet();
         user.setId(userId);
         USER_REPOSITORY_MAP.put(userId, user);
-
-        //Работаем с БД
-//        UserEntity userEntity = new UserEntity();
-//
-//        userRepository.save()
     }
 
     @Override
@@ -82,7 +63,6 @@ public class UserService implements IUserService{
             USER_REPOSITORY_MAP.put(id, user);
             return true;
         }
-
         return false;
     }
 

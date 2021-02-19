@@ -70,23 +70,23 @@ public class CarControllerTest {
                 .andDo(document(uri));
     }
 
-//    @Test
-//    public void read() throws Exception{
+    @Test
+    public void read() throws Exception{
 //        createCar();
-//        String uri = "/greetings/cars";
-//        mockMvc.perform(get(uri))
-//                .andExpect(status().isOk())
-//                .andDo(document(uri));
-//    }
+        String uri = "/greetings/cars";
+        mockMvc.perform(get(uri))
+                .andExpect(status().isOk())
+                .andDo(document(uri));
+    }
 
-//    @Test
-//    public void testRead() throws Exception{
+    @Test
+    public void testRead() throws Exception{
 //        createCar();
-//        String uri = "/greetings/cars/1";
-//        mockMvc.perform(get(uri))
-//                .andExpect(status().isOk())
-//                .andDo(document(uri));
-//    }
+        String uri = "/greetings/cars/5";
+        mockMvc.perform(get(uri))
+                .andExpect(status().isOk())
+                .andDo(document(uri));
+    }
 
 //    @Test
 //    public void update() throws Exception{

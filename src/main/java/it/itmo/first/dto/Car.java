@@ -7,12 +7,12 @@ public class Car {
     private Integer year_of_release;
     private Integer owner_id;
 
-    public Car(Integer id, String model, String brend, Integer year_of_release, Integer owner) {
+    public Car(Integer id, String model, String brend, Integer year_of_release, Integer owner_id) {
         this.id = id;
         this.model = model;
         this.brend = brend;
         this.year_of_release = year_of_release;
-        this.owner_id = owner;
+        this.owner_id = owner_id;
     }
 
     public Car() {

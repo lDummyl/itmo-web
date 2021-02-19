@@ -54,8 +54,7 @@ public class CarServiceDB implements ICarService{
     @Override
     public boolean update(Car car, int id) {
         if (carRepository.findById(id).isPresent()){
-            CarEntity carEntity = carRepository.findById(id).stream().findFirst().get();
-            carRepository.save(carEntity);
+            carRepository.save(objectMapper.convertValue(car, CarEntity.class));
             return true;
         }
         return false;

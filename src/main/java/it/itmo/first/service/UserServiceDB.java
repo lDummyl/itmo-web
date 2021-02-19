@@ -2,15 +2,12 @@ package it.itmo.first.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.itmo.first.db.JpaRepository.UserRepository;
-import it.itmo.first.db.entity.CarEntity;
 import it.itmo.first.db.entity.UserEntity;
-import it.itmo.first.dto.Car;
 import it.itmo.first.dto.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,7 +38,7 @@ public class UserServiceDB implements IUserService{
     @Override
     public List<User> readAll() {
         Iterable<UserEntity> all = userRepository.findAll();
-        return objectMapper.convertValue(all, ArrayList.class);
+        return objectMapper.convertValue(all, List.class);
     }
 
     @Override
@@ -56,17 +53,7 @@ public class UserServiceDB implements IUserService{
     @Override
     public boolean update(User user, int id) {
         if (userRepository.findById(id).isPresent()){
-            UserEntity userEntity = userRepository.findUserEntityByQuery(id).get(0);
-            userEntity.setName(user.getName());
-            userEntity.setEmail(user.getEmail());
-            userEntity.setBirthdate(user.getBirthdate());
-            userEntity.setGender(user.getGender());
-            List<CarEntity> carEntityList= new ArrayList<>();
-            for (Car car: user.getCarEntities()) {
-                carEntityList.add(objectMapper.convertValue(car, CarEntity.class));
-            }
-            userEntity.setCarEntities(carEntityList);
-            userRepository.save(userEntity);
+            userRepository.save(objectMapper.convertValue(user, UserEntity.class));
             return true;
         }
         return false;
