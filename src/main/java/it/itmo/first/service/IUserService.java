@@ -6,7 +6,7 @@ import java.util.List;
 public interface IUserService {
     /**
      * Создает нового пользователя
-     * @param user - машина для создания
+     * @param user - пользователь для создания
      * Если пользователь с таким id уже есть, то не добавляет в список пользователей
      */
     void create(User user);

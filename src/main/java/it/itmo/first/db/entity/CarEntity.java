@@ -1,17 +1,17 @@
 package it.itmo.first.db.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(schema = "public", name = "car")
 public class CarEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)// используем то значение, которое будет присваиваться в БД
     private Integer id;
     private String model;
     private String brend;
     private Integer year_of_release;
+    private Integer owner_id;
 
     @Override
     public String toString() {
@@ -20,18 +20,16 @@ public class CarEntity {
                 ", model='" + model + '\'' +
                 ", brend='" + brend + '\'' +
                 ", year_of_release=" + year_of_release +
+                ", owner_id=" + owner_id +
                 '}';
     }
 
-    public CarEntity() {
+    public Integer getOwner_id() {
+        return owner_id;
     }
 
-    public Integer getYearofrelease() {
-        return year_of_release;
-    }
-
-    public void setYearofrelease(Integer yearofrelease) {
-        this.year_of_release = year_of_release;
+    public void setOwner_id(Integer owner_id) {
+        this.owner_id = owner_id;
     }
 
     public Integer getId() {
@@ -58,7 +56,12 @@ public class CarEntity {
         this.brend = brend;
     }
 
+    public Integer getYear_of_release() {
+        return year_of_release;
+    }
 
-
+    public void setYear_of_release(Integer year_of_release) {
+        this.year_of_release = year_of_release;
+    }
 }
 

@@ -1,5 +1,10 @@
 package it.itmo.first.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import it.itmo.first.dto.User;
 
 import javax.persistence.*;
@@ -10,17 +15,34 @@ import java.util.List;
 @Table(schema = "public", name = "user")
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //используем то значение, которое будет присваиваться в БД
     private Integer id;
     private String name;
     private String email;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate birthdate;
     private User.Gender gender;
-
-    @OneToMany(fetch = FetchType.EAGER)// все вытаскиваем
-//    @OneToMany(fetch = FetchType.LAZY)// не все вытаскиваем
+//    @JsonSerialize(using = IterableSerializer.class)
+//    @OneToMany(fetch = FetchType.EAGER)// все вытаскиваем
+//    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY)// не все вытаскиваем
     @JoinColumn(name = "owner_id")//подтягиваем колонку owner_id из таблицы car и джойним id юзера
+//    @JsonIgnore
     private List<CarEntity> carEntities;
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", birthdate=" + birthdate +
+                ", gender=" + gender +
+                ", carEntities=" + carEntities +
+                '}';
+    }
 
     public String getEmail() {
         return email;
@@ -38,7 +60,7 @@ public class UserEntity {
         this.birthdate = birthdate;
     }
 
-    public User.Gender getGender(User.Gender male) {
+    public User.Gender getGender() {
         return gender;
     }
 
@@ -53,10 +75,6 @@ public class UserEntity {
     public void setCarEntities(List<CarEntity> carEntities) {
         this.carEntities = carEntities;
     }
-
-    public UserEntity() {
-    }
-
 
     public int getId() {
         return id;
@@ -74,12 +92,4 @@ public class UserEntity {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", carEntities=" + carEntities +
-                '}';
-    }
 }

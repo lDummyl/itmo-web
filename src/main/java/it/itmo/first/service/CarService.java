@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Service
+//@Service
 /*Аннотация @Service говорит спрингу, что данный класс является сервисом. Это специальный тип классов,
 в котором реализуется некоторая бизнес логика приложения. Впоследствии, благодаря этой аннотации Spring
 будет предоставлять нам экземпляр данного класса в местах, где это, нужно с помощью Dependency Injection.*/
