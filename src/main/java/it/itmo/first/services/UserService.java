@@ -86,7 +86,7 @@ public class UserService {
         return user.toString() + " is successfully added.";
     }
 
-    public String edit(@PathVariable("id") Integer id, String name, String email, LocalDate birthdate, Gender gender){
+    public String edit( Integer id, String name, String email, LocalDate birthdate, Gender gender){
         for(UserEntity user : userRepository.findAll()){
             if(user.getId().equals(id)){
                 user.setName(name);
@@ -99,7 +99,7 @@ public class UserService {
         return "User is not found!";
     }
 
-    public String delete(@PathVariable("id") Integer id){
+    public String delete(Integer id){
         for(UserEntity user : userRepository.findAll()){
             if(user.getId().equals(id)){
                 userRepository.delete(user);
