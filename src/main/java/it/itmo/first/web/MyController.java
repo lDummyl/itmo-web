@@ -66,8 +66,8 @@ public class MyController {
 
     @GetMapping
     @RequestMapping("/users/add")
-    public String addUser(Integer id, String name, String email, LocalDate birthdate, Gender gender){
-         return userService.addUser(id, name, email, birthdate, gender);
+    public String addUser(Representation representation){
+         return userService.addUser(representation);
     }
     @PutMapping
     @RequestMapping("/users/{id}/edit")

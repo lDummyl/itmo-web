@@ -13,6 +13,7 @@ public interface CarRepository extends PagingAndSortingRepository<CarEntity, Int
 
     @Query("select c from CarEntity c where c.productionDate >= :localDate")
     List<CarEntity> findAllByQuery(LocalDate localDate);
-    List<CarEntity> findAllByProductionDate(LocalDate localDate);
+    List<CarEntity> findAllById(Integer id);
     List<CarEntity> findAll();
+
 }

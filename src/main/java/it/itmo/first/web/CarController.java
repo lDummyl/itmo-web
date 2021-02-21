@@ -1,13 +1,9 @@
 package it.itmo.first.web;
 
 import it.itmo.first.dto.Car;
-import it.itmo.first.dto.CarType;
 import it.itmo.first.services.CarService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/greetings")

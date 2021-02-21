@@ -12,9 +12,13 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<UserEntity, Integer> {
        List<UserEntity> findAllByBirthdateAfter(LocalDate localDate);
 
-       @Query("select u from UserEntity u where u.birthdate >= :localDate")
-       List<UserEntity> findAllByQuery(LocalDate localDate);
+//       @Query("select u from UserEntity u where u.birthdate >= :localDate")
+//       List<UserEntity> findAllByQuery(LocalDate localDate);
 
        List<UserEntity> findAll();
 
+       @Query("select u from UserEntity u where u.name = :name")
+       List<UserEntity> findAllByQuery(String name);
+
+       List<UserEntity> findUserEntityByName(String name);
 }
