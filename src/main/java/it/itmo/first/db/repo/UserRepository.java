@@ -20,5 +20,5 @@ public interface UserRepository extends CrudRepository<UserEntity, Integer> {
        @Query("select u from UserEntity u where u.name = :name")
        List<UserEntity> findAllByQuery(String name);
 
-       List<UserEntity> findUserEntityByName(String name);
+       List<UserEntity> findAllByName(String name);
 }

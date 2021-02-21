@@ -30,7 +30,7 @@ public class RegistrationController {
     public String translate(@RequestParam String name, Model model) {
 
         model.addAttribute("name", name);
-        userService.addUserName(name);
+        userService.addUserName(name.trim());
         return "addCar";
     }
     @GetMapping({"/", "/addCar"})
@@ -50,7 +50,8 @@ public class RegistrationController {
                 .addAttribute("brandModelName", brandModelName)
                 .addAttribute("color", color);
 
-        carService.addCar(brandName, brandModelName, color);
+        carService.addCar(brandName.trim(), brandModelName.trim(), color.trim());
+
         return "carSuccess";
         }
 
@@ -61,9 +62,9 @@ public class RegistrationController {
     }
     @RequestMapping(value = "/showData", method = RequestMethod.POST)
     public String getData(@RequestParam String name, Model model) {
-        String data = carService.showCars(name);
+        String data = carService.showCars(name.trim());
         model.addAttribute("name", name).addAttribute("data", data);
-//
+
         return "showData";
     }
 }
