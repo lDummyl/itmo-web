@@ -1,15 +1,21 @@
-<%--<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>--%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE HTML>
 <html lang="ru">
 <head>
     <title>Users&Cars</title>
     <meta charset="utf-8">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+    <link rel="icon" type="image/gif" href="favicon/animated_favicon1.gif">
     <style>
+        h1{
+            align-content: center;
+            text-align: center;
+        }
         th {
             font-weight: normal;
             color: #039;
-            padding: 10px 15px;
+            padding: 10px 10px;
             border-right: 1px solid #f6c163;
         }
         #userTable td {
@@ -28,6 +34,10 @@
         /*    background: #f6c163;*/
         /*}*/
 
+        #tdCarId, #tdCarInputId, #tdCarInputOk, #thCarInputId {
+            width: 5%;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -44,7 +54,11 @@
 
         #userFormTable{
             margin-top: -1px;
-            overflow: hidden;
+            /*overflow: hidden;*/
+            /*position: fixed;*/
+            /*z-index: 99;*/
+            top: 100px;
+            background-color: #f3ffbb;
         }
 
         #userFormTable td {
@@ -94,9 +108,14 @@
 
         #userTable{
             border: 1px black solid;
+            /*background-color: gold;*/
+            /*position: fixed;*/
+            /*z-index: 99;*/
+            /*top: 100px;*/
         }
 
         #userInputId {
+
         }
 
         div {
@@ -117,7 +136,7 @@
 
 </head>
 <body>
-Проверка
+<h1>Добро пожаловать на домашнюю страницу учебного проекта Spring</h1>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div>
     <table id="userTable" class="userTable">
@@ -147,7 +166,7 @@
 
             itemUser.carEntities.forEach(function(itemCar, j, arrCar) {
                 $('#carTable'+i).append($('<tr>')
-                    .append($('<td>').append(itemCar.id))
+                    .append($('<td id="tdCarId">').append(itemCar.id))
                     .append($('<td>').append(itemCar.brend))
                     .append($('<td>').append(itemCar.model))
                     .append($('<td>').append(itemCar.year_of_release)))
@@ -207,7 +226,7 @@
                     // Запрос успешно выполнен
                     console.log(response);
                     // return response.json() и так далее см. документацию
-                    // location.reload(true); /*true - загрузка с сервера , false - с кеша*/
+                    location.reload(true); /*true - загрузка с сервера , false - с кеша*/
                 },
                 function(error) {
                     // Запрос не получилось отправить
@@ -293,7 +312,7 @@
                 .append($('<form id="carForm" action="/cars" method="post" >')
                 .append($('<table id="InputCarTable">')
                     .append($('<tr>')
-                        .append($('<th>').append('id'))
+                        .append($('<th id="thCarInputId">').append('id'))
                         .append($('<th>').append('brend'))
                         .append($('<th>').append('mark'))
                         .append($('<th>').append('year'))
@@ -301,12 +320,12 @@
                         .append($('<th>').append(''))
                     )
                     .append($('<tr>')
-                        .append($('<td>').append($('<input type="text" id="carInputId" name="id" value="0" readonly>')))
+                        .append($('<td id="tdCarInputId">').append($('<input type="text" id="carInputId" name="id" value="0" readonly>')))
                         .append($('<td>').append($('<input type="text" id="carInputBrend" name="brend">')))
                         .append($('<td>').append($('<input type="text" id="carInputModel" name="model">')))
                         .append($('<td>').append($('<input type="text" id="carInputYearOfRelease" name="year_of_release">')))
                         .append($('<td>').append($('<input type="text" id="carInputOwnerId" name="owner_id">')))
-                        .append($('<td>').append($('<input type="submit" id="carInputButton" value="OK">')))
+                        .append($('<td id="tdCarInputOk">').append($('<input type="submit" id="carInputButton" value="OK">')))
                     )
                 )
             );
@@ -314,7 +333,7 @@
             document.getElementById("carInputOwnerId").innerText = document.getElementById("userInputId").innerText;
             document.getElementById("carInputOwnerId").value = document.getElementById("userInputId").value;
 
-            document.getElementById('carForm').addEventListener('submit', submitForm1);
+            document.getElementById('carForm').addEventListener('submit', submitForm1);//не перемещать!!!!!!!!!!!!
         }
 
         function selectCar(thisRow){
@@ -350,7 +369,7 @@
             let obj = {};
             formData.forEach((value, key) => obj[key] = value);
             // Собираем запрос к серверу
-            alert(obj);
+            // alert(obj);
             let request = new Request(event.target.action, {
                 method: 'POST',
                 body: JSON.stringify(obj),
@@ -358,7 +377,7 @@
                     'Content-Type': 'application/json',
                 },
             });
-            alert(JSON.stringify(obj));
+            // alert(JSON.stringify(obj));
             // Отправляем (асинхронно!)
             fetch(request).then(
                 function(response) {
