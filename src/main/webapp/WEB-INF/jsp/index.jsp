@@ -12,22 +12,25 @@
             table-layout: fixed;
             border: 1px black solid;
             padding: 0;
+            background-color: bisque;
 
         }
 
         #userFormTable{
             margin-top: -1px;
-
+            overflow: hidden;
         }
 
         #userFormTable td {
             padding: 3px 3px ;
             border-right: 1px black solid;
+            overflow:hidden;
         }
 
         #thUserId, #tdUserFormId {
             width: 3%;
             min-width: 30px;
+
         }
 
         #thUserName, #tdUserFormName {
@@ -36,7 +39,7 @@
         }
 
         #thUserEmail, #tdUserFormEmail {
-            width: 30%;
+            width: 18%;
             min-width: 200px;
         }
 
@@ -49,6 +52,9 @@
             width: 10%;
             min-width: 180px;
         }
+        #thUserDelete, #tdUserFormDelete{
+            width: 3%;
+        }
         tr {
             vertical-align: top;
         }
@@ -57,11 +63,11 @@
             margin: 0;
             padding: 3px;
             border-right: 1px black solid;
+            overflow:hidden;
         }
 
         #userTable{
             border: 1px black solid;
-            /*border-collapse: collapse;*/
         }
 
         #userInputId {
@@ -95,6 +101,7 @@
             <th id="thUserEmail">e-mail</th>
             <th id="thUserBirthdate">birthdate</th>
             <th id="thUserGender">gender</th>
+            <th id="thUserDelete">X</th>
             <th id="thUserCarCollection">car collection</th>
         </tr>
     </table>
@@ -108,6 +115,7 @@
                 .append($('<td>').append(itemUser.email))
                 .append($('<td>').append(itemUser.birthdate))
                 .append($('<td>').append(itemUser.gender))
+                .append($('<td>').append('<input type="button" value="X" onclick="deleteUser(this)">'))
                 .append($('<td>').append($('<table id = "carTable'+i+'" class="carTable" >')))
             );
 
@@ -134,9 +142,10 @@
             <td id="tdUserFormGender"><select id="userInputGender" name="gender" value="">
                                 <option value="0" name="male" selected = false>male</option>
                                 <option value="1" selected = false>female</option>
-                            </select></td>
-            <td><input type="submit" id="userInputButton" value="Добавить пользователя"></td>
-            <td><input type="button" id="userInputButtonDelete" onclick="" value="Удалить"></td>
+                            </select>
+                </td>
+            <td id="tdUserFormDelete"><input type="submit" id="userInputButton" value="OK"></td>
+            <td id="tdUserFormCarCollection"></td>
         </tr>
     </table>
     </form>
@@ -185,6 +194,33 @@
             // отдельно от основного кода
             console.log('Запрос отправляется');
         }
+
+        function deleteUser(thisUser){
+            userId = thisUser.parentElement.parentElement.firstChild.innerText;
+            console.log(userId);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('DELETE', '/'+userId, true);
+
+            xhr.send();
+
+            xhr.onreadystatechange = function() {
+                if (this.readyState != 4) {
+                    location.reload(true); /*true - загрузка с сервера , false - с кеша*/
+                    return;
+                }
+                // по окончании запроса доступны:
+                // status, statusText
+                // responseText, responseXML (при content-type: text/xml)
+                if (this.status != 200) {
+                    // обработать ошибку
+                    alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+                    return;
+                }
+                // получить результат из this.responseText или this.responseXML
+            }
+        }
     </script>
 
     <script>
@@ -212,14 +248,9 @@
                 document.getElementById("userInputGender")[1].selected = "true";
             }
 
-            document.getElementById("userInputButton").value = "Изменить пользователя";
-            // if (document.getElementById("userInputGender")[].value == null){
-            //
-            //     document.getElementById("userInputGender").value = thisRow.childNodes[4].innerText;
-            // } else if (document.getElementById("userInputGender").value != thisRow.childNodes[4].innerText){
-            //     document.getElementById("userInputGender")[1].selected = "true";
-            //     document.getElementById("userInputGender").value = thisRow.childNodes[4].innerText;
-            // } else {document.getElementById("userInputGender").value=null}
+            document.getElementById("userInputButton").value = "OK";
+
+            document.getElementById("tdUserFormCarCollection").innerHTML = thisRow.lastChild.innerHTML;
 
         }
     </script>

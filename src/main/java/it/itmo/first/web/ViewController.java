@@ -50,6 +50,16 @@ public class ViewController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id) {
+        final boolean deleted = userService.delete(id);
+
+        if (deleted) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    }
+
     @GetMapping({"/hello/{name}"})
     public String hello(Model model, @PathVariable String name) {
         model.addAttribute("name", name);
