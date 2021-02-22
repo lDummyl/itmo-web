@@ -6,14 +6,40 @@
     <title>Users&Cars</title>
     <meta charset="utf-8">
     <style>
+        th {
+            font-weight: normal;
+            color: #039;
+            padding: 10px 15px;
+            border-right: 1px solid #f6c163;
+        }
+        #userTable td {
+            color: #131111;
+            border-top: 1px solid #cbb04b;
+            padding: 10px 15px;
+        }
+        #userTable .userTableRow:nth-child(2n) {
+            background: #ffe0b9;
+        }
+
+        #userTable .userTableRow:hover td {
+            background: #ccddff;
+        }
+        /*.carTable {*/
+        /*    background: #f6c163;*/
+        /*}*/
+
         table {
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
             border: 1px black solid;
             padding: 0;
-            background-color: bisque;
+            /*background-color: bisque;*/
 
+        }
+
+        #InputCarTable {
+            margin-top: -1px;
         }
 
         #userFormTable{
@@ -83,7 +109,7 @@
             border:0;
             outline:0;
             width:98%;
-            padding: 0 0px;
+            padding: 0 0;
 
 
         }
@@ -101,7 +127,7 @@
             <th id="thUserEmail">e-mail</th>
             <th id="thUserBirthdate">birthdate</th>
             <th id="thUserGender">gender</th>
-            <th id="thUserDelete">X</th>
+            <th id="thUserDelete">x</th>
             <th id="thUserCarCollection">car collection</th>
         </tr>
     </table>
@@ -134,14 +160,14 @@
     </script>
     <table id="userFormTable">
         <tr>
-            <form id="benderform" action="/" method="post" enctype="application/json">
+            <form id="benderform" action="/" method="post">
                 <td id="tdUserFormId"><input type="text" id="userInputId" name="id" value="0" readonly></td>
                 <td id="tdUserFormName"><input type="text" id="userInputName" name="name"></td>
                 <td id="tdUserFormEmail"><input type="email" id="userInputEmail" name="email"></td>
                 <td id="tdUserFormBirthdate"><input type="date" id="userInputBirthdate" name="birthdate" data-date-format="YYYY-MMMM-DD"></td>
                 <td id="tdUserFormGender"><select id="userInputGender" name="gender" value="">
-                                    <option value="0" name="male" selected = false>male</option>
-                                    <option value="1" selected = false>female</option>
+                                    <option value="0" name="male" >male</option>
+                                    <option value="1" >female</option>
                                 </select>
                     </td>
                 <td id="tdUserFormDelete"><input type="submit" id="userInputButton" value="OK"></td>
@@ -174,14 +200,14 @@
                     'Content-Type': 'application/json',
                 },
             });
-
+            console.log( JSON.stringify(obj));
             // Отправляем (асинхронно!)
             fetch(request).then(
                 function(response) {
                     // Запрос успешно выполнен
                     console.log(response);
                     // return response.json() и так далее см. документацию
-                    location.reload(true); /*true - загрузка с сервера , false - с кеша*/
+                    // location.reload(true); /*true - загрузка с сервера , false - с кеша*/
                 },
                 function(error) {
                     // Запрос не получилось отправить
@@ -223,7 +249,7 @@
         }
     </script>
 
-    <script type="text/javascript">
+    <script type="text/javascript" charset="utf-8">
         document.getElementById("userInputGender").value = null;
 
         function selectUser(thisRow){
@@ -249,6 +275,8 @@
             }
 
             document.getElementById("userInputButton").value = "OK";
+
+
             //здесь добаавляем таблицу-редактор машин
             document.getElementById("tdUserFormCarCollection").innerHTML = thisRow.lastChild.innerHTML;
             /*$('#tdUserFormCarCollection').firstChild
@@ -261,15 +289,16 @@
                 trArr[i].insertCell(4).innerHTML = '<input type="button" value="x" onclick="deleteCar(this)">';
             }
 
-            $('#tdUserFormCarCollection').append($('<form id="carForm" action="/cars" method="post">')
-                .append($('<table>')
+            $('#tdUserFormCarCollection')
+                .append($('<form id="carForm" action="/cars" method="post" >')
+                .append($('<table id="InputCarTable">')
                     .append($('<tr>')
                         .append($('<th>').append('id'))
                         .append($('<th>').append('brend'))
                         .append($('<th>').append('mark'))
                         .append($('<th>').append('year'))
                         .append($('<th>').append('owner id'))
-                        // .append($('<th>').append('del'))
+                        .append($('<th>').append(''))
                     )
                     .append($('<tr>')
                         .append($('<td>').append($('<input type="text" id="carInputId" name="id" value="0" readonly>')))
@@ -285,6 +314,7 @@
             document.getElementById("carInputOwnerId").innerText = document.getElementById("userInputId").innerText;
             document.getElementById("carInputOwnerId").value = document.getElementById("userInputId").value;
 
+            document.getElementById('carForm').addEventListener('submit', submitForm1);
         }
 
         function selectCar(thisRow){
@@ -299,14 +329,14 @@
             document.getElementById("carInputOwnerId").innerText = document.getElementById("userInputId").innerText;
             document.getElementById("carInputOwnerId").value = document.getElementById("userInputId").value;
 
-            document.getElementById('carForm').addEventListener('submit', submitForm1);
+            // document.getElementById('carForm').addEventListener('submit', submitForm1);
         }
 
     </script>
 
-    <script type="text/javascript">
+    <script type="text/javascript" charset="utf-8">
         //************************************Переопределение метода отправки формы машины******************************
-        // document.getElementById('carForm').addEventListener('submit1', submitForm1);
+        // document.getElementById('carForm').addEventListener('submit', submitForm1);
 
 
         function submitForm1(event) {
@@ -320,6 +350,7 @@
             let obj = {};
             formData.forEach((value, key) => obj[key] = value);
             // Собираем запрос к серверу
+            alert(obj);
             let request = new Request(event.target.action, {
                 method: 'POST',
                 body: JSON.stringify(obj),
@@ -327,14 +358,14 @@
                     'Content-Type': 'application/json',
                 },
             });
-
+            alert(JSON.stringify(obj));
             // Отправляем (асинхронно!)
             fetch(request).then(
                 function(response) {
                     // Запрос успешно выполнен
                     console.log(response);
-                    // return response.json() и так далее см. документацию
-                    // location.reload(true); /*true - загрузка с сервера , false - с кеша*/
+                    // return response.json();// и так далее см. документацию
+                    location.reload(true); /*true - загрузка с сервера , false - с кеша*/
                 },
                 function(error) {
                     // Запрос не получилось отправить
@@ -375,6 +406,7 @@
             }
         }
     </script>
+
 </div>
 </body>
 </html>

@@ -50,22 +50,22 @@ public class ViewController {
     }
 
     @PostMapping(value = "/",headers = "Accept=application/json")
-    public ResponseEntity<?> createCar(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody User user) {
         userService.create(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/cars",headers = "Accept=application/json")
-    public ResponseEntity<?> createCar(/*@RequestBody*/ Car car) { //избавился от ошибки There was an unexpected error (type=Unsupported Media Type, status=415). Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported
+    public ResponseEntity<?> createCar(@RequestBody Car car) { //избавился от ошибки There was an unexpected error (type=Unsupported Media Type, status=415). Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported
         carService.create(car);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/cars", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/cars", method = RequestMethod.GET)
     public void method(HttpServletResponse httpServletResponse) {
         httpServletResponse.setHeader("Location", "/");
         httpServletResponse.setStatus(302);
-    }
+    }*/
 
     @DeleteMapping(value = "/cars/{id}")
     public ResponseEntity<?> deleteCar(@PathVariable int id) {
