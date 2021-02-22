@@ -9,6 +9,10 @@
 <body>
 <h3>Car ${brandName} ${brandModelName} ${color} is added!</h3>
 </body>
-<a href="/inData">search cars by username</a>
+<a href="/inData">Search cars by username</a>
+<br>
+<a href="/addCar">Add one more car</a>
+<br>
+<a href="/registration">Add new user</a>
 </body>
 </html>

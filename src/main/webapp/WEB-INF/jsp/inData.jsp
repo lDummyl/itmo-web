@@ -6,7 +6,7 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
-<h2 class="hello-title">Please, enter your name.</h2>
+<h2 class="hello-title">Please, enter the name for searching.</h2>
 
 <form action="/showData" method="POST">
     <div class="form-group">

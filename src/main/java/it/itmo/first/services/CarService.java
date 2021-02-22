@@ -67,6 +67,9 @@ public class CarService {
         carEntity.setType(car.getType());
         carEntity.setId(car.getId());
 
+        List<UserEntity> all = userRepository.findAll();
+        UserEntity userEntity = all.get(all.size() - 1);
+        carEntity.setOwner_id(userEntity.getId());
         carRepository.save(carEntity);
 
     }
