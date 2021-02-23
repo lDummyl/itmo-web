@@ -55,6 +55,7 @@
 			<scope>test</scope>
 		</dependency>
 
+<!--		используется для jsp-->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
@@ -68,7 +69,11 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+
 		</plugins>
 	</build>
+
+
 
 </project>

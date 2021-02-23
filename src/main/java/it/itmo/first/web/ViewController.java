@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -34,7 +32,7 @@ public class ViewController {
 
 
     @GetMapping()
-    public String hello1(Model model) {
+    public String index(Model model) {
         ObjectMapper objectMapper = new ObjectMapper();
        List userList = userService.readAll();
         String string = null;
@@ -61,7 +59,7 @@ public class ViewController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    /*@RequestMapping(value = "/cars", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/cars", method = RequestMethod.GET)  //это пример редиректа
     public void method(HttpServletResponse httpServletResponse) {
         httpServletResponse.setHeader("Location", "/");
         httpServletResponse.setStatus(302);
