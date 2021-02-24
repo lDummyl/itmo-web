@@ -55,7 +55,7 @@
 			<scope>test</scope>
 		</dependency>
 
-<!--		используется для jsp-->
+<!--		используется для jsp. Tomcat — это контейнер сервлетов: именно он обрабатывает входящие запросы извне и передает их нашему приложению.-->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
