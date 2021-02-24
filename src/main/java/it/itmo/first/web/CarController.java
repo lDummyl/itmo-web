@@ -2,7 +2,6 @@ package it.itmo.first.web;
 
 import it.itmo.first.dto.Car;
 import it.itmo.first.services.CarService;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class CarController {
 
 
-   private CarService carService;
+    private final CarService carService;
 
     public CarController(CarService carService) {
         this.carService = carService;

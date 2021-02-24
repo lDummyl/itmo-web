@@ -10,14 +10,18 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-
 public class RegistrationController {
-    private UserService userService;
-    private CarService carService;
+    private final UserService userService;
+    private final CarService carService;
 
     public RegistrationController(UserService userService, CarService carService) {
         this.userService = userService;
         this.carService = carService;
+    }
+
+    @GetMapping({"/", "/main"})
+    public String mainPage() {
+        return "mainPage";
     }
 
     @GetMapping({"/", "/registration"})

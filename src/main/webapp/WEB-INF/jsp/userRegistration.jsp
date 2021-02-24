@@ -17,7 +17,9 @@
     </div>
     <input type="submit" value="Register">
 </form>
-
+<br/>
+<a href="/main">Back to main page</a>
+<br/>
 <script src="/js/main.js"></script>
 </body>
 </html>

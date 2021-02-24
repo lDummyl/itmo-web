@@ -34,5 +34,8 @@
     </div>
     <input type="submit" value="Register car">
 </form>
+<br/>
+<a href="/main">Back to main page</a>
+<br/>
 </body>
 </html>
