@@ -2,6 +2,7 @@ package it.itmo.first.web;
 
 
 import it.itmo.first.dto.Representation;
+import it.itmo.first.exception.MyException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +39,7 @@ public class MyController {
     @GetMapping
     @RequestMapping("/hello")
     public String  sayHello(String name) {
+        if(true) throw new MyException("my message");
         names.add(name);
         return String.format("Hello, %s!", name);
     }
