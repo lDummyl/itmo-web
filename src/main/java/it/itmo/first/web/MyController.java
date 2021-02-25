@@ -3,6 +3,7 @@ package it.itmo.first.web;
 
 import it.itmo.first.dto.Gender;
 import it.itmo.first.dto.Representation;
+import it.itmo.first.exceptions.MyException;
 import it.itmo.first.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,7 @@ public class MyController {
     @GetMapping
     @RequestMapping("/hello")
     public String  sayHello(String name) {
+        if(true) throw new MyException("my message");
         return userService.sayHello(name);
     }
 
