@@ -22,14 +22,14 @@ public class CarController {
     }
 
     @PutMapping
-    @RequestMapping("/cars/{id}/edit")
+    @RequestMapping("/cars/{id}")
     public String update(@PathVariable("id") Integer id, Car car) {
 
         return carService.update(id, car);
     }
 
     @DeleteMapping
-    @RequestMapping("/cars/{id}/delete")
+    @RequestMapping("/cars/{id}")
     public String delete(@PathVariable("id") Integer id) {
 
         return carService.delete(id);
