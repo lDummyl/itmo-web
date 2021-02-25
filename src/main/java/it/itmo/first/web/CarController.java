@@ -1,6 +1,7 @@
 package it.itmo.first.web;
 
 import it.itmo.first.dto.Car;
+import it.itmo.first.exceptions.UpdateException;
 import it.itmo.first.services.CarService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class CarController {
 
     @PutMapping("/cars/{id}")
     public String update(@PathVariable("id") Integer id, Car car) {
-
+        if(true){throw new UpdateException("updated?");}
         return carService.update(id, car);
     }
 

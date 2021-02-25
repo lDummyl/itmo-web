@@ -26,4 +26,11 @@ public class MyExHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(new RuntimeException(), ex.getMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
+    @ExceptionHandler(value = {UpdateException.class})
+    protected ResponseEntity<Object> handleUpdateEx(UpdateException ex, WebRequest request) {
+
+        log.warn("be careful when you edit a profile");
+        return handleExceptionInternal(new RuntimeException(), ex.getMessage(), new HttpHeaders(), HttpStatus.OK, request);
+    }
+
 }
