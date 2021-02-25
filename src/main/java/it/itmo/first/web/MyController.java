@@ -69,14 +69,13 @@ public class MyController {
     public String addUser(Representation representation){
          return userService.addUser(representation);
     }
-    @PutMapping
-    @RequestMapping("/users/{id}/edit")
+    @PutMapping("/users/{id}")
     public String edit(@PathVariable("id") Integer id, String name, String email, LocalDate birthdate, Gender gender){
        return userService.edit(id, name, email, birthdate, gender);
     }
 
-    @DeleteMapping
-    @RequestMapping("/users/{id}/delete")
+
+    @DeleteMapping("/users/{id}")
     public String delete(@PathVariable("id") Integer id){
         return userService.delete(id);
     }

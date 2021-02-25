@@ -110,7 +110,7 @@ public class MyControllerTest {
     public void update() throws Exception {
         String content = objectMapper.writeValueAsString(user);
         System.out.println(content);
-        String uri = "/greetings/users/666/edit";
+        String uri = "/greetings/users/666";
         mockMvc.perform(put(uri)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
@@ -120,7 +120,7 @@ public class MyControllerTest {
 
     @Test
     public void delete() throws Exception {
-        String uri = "/greetings/users/666/delete";
+        String uri = "/greetings/users/666";
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete(uri))
                 .andExpect(status().isOk())
                 .andDo(document(uri));

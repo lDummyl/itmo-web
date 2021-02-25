@@ -76,7 +76,7 @@ public class CarControllerTest {
     public void update() throws Exception {
         String content = objectMapper.writeValueAsString(car);
         System.out.println(content);
-        String uri = "/greetings/cars/5/edit";
+        String uri = "/greetings/cars/5";
         mockMvc.perform(put(uri)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
@@ -86,7 +86,7 @@ public class CarControllerTest {
 
     @Test
     public void delete() throws Exception {
-        String uri = "/greetings/cars/5/delete";
+        String uri = "/greetings/cars/5";
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete(uri))
                 .andExpect(status().isOk())
                 .andDo(document(uri));

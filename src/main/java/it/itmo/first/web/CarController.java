@@ -21,15 +21,14 @@ public class CarController {
         return carService.create(car);
     }
 
-    @PutMapping
-    @RequestMapping("/cars/{id}")
+
+    @PutMapping("/cars/{id}")
     public String update(@PathVariable("id") Integer id, Car car) {
 
         return carService.update(id, car);
     }
 
-    @DeleteMapping
-    @RequestMapping("/cars/{id}")
+    @DeleteMapping("/cars/{id}")
     public String delete(@PathVariable("id") Integer id) {
 
         return carService.delete(id);
