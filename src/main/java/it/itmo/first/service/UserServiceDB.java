@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.itmo.first.db.JpaRepository.UserRepository;
 import it.itmo.first.db.entity.UserEntity;
 import it.itmo.first.dto.User;
+import it.itmo.first.exception.MyExHandler;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +34,9 @@ public class UserServiceDB implements IUserService{
     public void create(User user) {
         UserEntity userEntity = objectMapper.convertValue(user, UserEntity.class);
         userRepository.save(userEntity);
+        if (!userRepository.existsById(userEntity.getId())) {
+            throw new RuntimeException("user don't save in DB");
+        }
     }
 
     @Override
