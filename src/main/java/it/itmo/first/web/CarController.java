@@ -30,7 +30,6 @@ public class CarController {
 
     @DeleteMapping("/cars/{id}")
     public String delete(@PathVariable("id") Integer id) {
-
         return carService.delete(id);
     }
 
