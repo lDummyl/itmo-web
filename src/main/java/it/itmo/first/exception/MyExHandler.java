@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@Slf4j
+@Slf4j //как JPA, только для логирования
 @ControllerAdvice
 public class MyExHandler extends ResponseEntityExceptionHandler {
     //помогает серверу не падать
@@ -21,10 +21,12 @@ public class MyExHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(new RuntimeException(), ex.getMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
+    //интегрирование нашего исключения в handler
     @ExceptionHandler(value = {MyException.class})
     protected ResponseEntity<Object> handleMyEx(MyException ex, WebRequest request) {
-
+        //варианты логирования:
         log.error("Aaaa!", ex);
+        log.error("Trouble with {}", ex.getMessage(),ex);
         return handleExceptionInternal(new RuntimeException(), ex.getMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
