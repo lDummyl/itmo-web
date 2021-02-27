@@ -1,15 +1,18 @@
 package it.itmo.first.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.itmo.first.config.UserFramesConfig;
 import it.itmo.first.db.JpaRepository.UserRepository;
 import it.itmo.first.db.entity.UserEntity;
 import it.itmo.first.dto.User;
-import it.itmo.first.exception.MyExHandler;
 import it.itmo.first.exception.MyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,10 +22,13 @@ import java.util.List;
 public class UserServiceDB implements IUserService{
 
     private final UserRepository userRepository;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
+    private final UserFramesConfig userFramesConfig;
 
-    public UserServiceDB(UserRepository userRepository) {
+    public UserServiceDB(UserRepository userRepository, ObjectMapper objectMapper, UserFramesConfig userFramesConfig) {
         this.userRepository = userRepository;
+        this.objectMapper = objectMapper;
+        this.userFramesConfig = userFramesConfig;
     }
 
     @Transactional
@@ -34,8 +40,11 @@ public class UserServiceDB implements IUserService{
     @Override
     public void create(User user) {
         UserEntity userEntity = objectMapper.convertValue(user, UserEntity.class);
-        userRepository.save(userEntity);
-        if (!userRepository.existsById(userEntity.getId())) {
+        //TODO здесь сделать проверку на возраст и на количество машин
+        System.out.println(userFramesConfig.getMaxCars());
+
+//        userRepository.save(userEntity);
+        if (!userRepository.existsById(userRepository.save(userEntity).getId())) {
             throw new MyException("user don't save in DB");
         }
     }
