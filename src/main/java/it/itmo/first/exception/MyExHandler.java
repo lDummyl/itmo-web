@@ -1,6 +1,8 @@
 package it.itmo.first.exception;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.itmo.first.beans.SomeChildBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 @ControllerAdvice
 public class MyExHandler extends ResponseEntityExceptionHandler {
+
+    ObjectMapper objectMapper;
+
+    public MyExHandler(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @ExceptionHandler(value = {Throwable.class})
     protected ResponseEntity<Object> handleConflict(Throwable ex, WebRequest request) {
