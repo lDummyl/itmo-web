@@ -19,7 +19,7 @@ public class RegistrationController {
         this.carService = carService;
     }
 
-    @GetMapping({"/", "/main"})
+    @GetMapping( "/main")
     public String mainPage() {
         return "mainPage";
     }

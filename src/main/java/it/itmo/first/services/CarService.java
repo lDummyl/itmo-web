@@ -36,13 +36,7 @@ public class CarService {
     }
 
     public String create(Car car) {
-        CarEntity carEntity = new CarEntity();
-        carEntity.setBrandName(car.getBrandName());
-        carEntity.setBrandModelName(car.getBrandModelName());
-        carEntity.setProductionDate(car.getProductionDate());
-        carEntity.setColor(car.getColor());
-        carEntity.setType(car.getType());
-        carEntity.setId(car.getId());
+        CarEntity carEntity = getCarEntity(car);
 
         Integer carId = carEntity.getId();
 
@@ -59,6 +53,16 @@ public class CarService {
         car.setColor(color);
         car.setBrandName(brandName);
         car.setBrandModelName(brandModelName);
+        CarEntity carEntity = getCarEntity(car);
+
+        List<UserEntity> all = userRepository.findAll();
+        UserEntity userEntity = all.get(all.size() - 1);
+        carEntity.setOwner_id(userEntity.getId());
+        carRepository.save(carEntity);
+
+    }
+
+    private CarEntity getCarEntity(Car car) {
         CarEntity carEntity = new CarEntity();
         carEntity.setBrandName(car.getBrandName());
         carEntity.setBrandModelName(car.getBrandModelName());
@@ -66,12 +70,7 @@ public class CarService {
         carEntity.setColor(car.getColor());
         carEntity.setType(car.getType());
         carEntity.setId(car.getId());
-
-        List<UserEntity> all = userRepository.findAll();
-        UserEntity userEntity = all.get(all.size() - 1);
-        carEntity.setOwner_id(userEntity.getId());
-        carRepository.save(carEntity);
-
+        return carEntity;
     }
 
     public String update(Integer id, Car car) {
